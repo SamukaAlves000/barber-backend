@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -34,7 +35,7 @@ public class ServicoController {
     }
 
     @PostMapping
-    private ResponseEntity<Servico> save (@RequestBody ServicoPostRequestBody servicoPostRequestBody){
+    private ResponseEntity<Servico> save (@RequestBody @Valid ServicoPostRequestBody servicoPostRequestBody){
         return new ResponseEntity<>(servicoService.save(servicoPostRequestBody), HttpStatus.CREATED);
     }
 

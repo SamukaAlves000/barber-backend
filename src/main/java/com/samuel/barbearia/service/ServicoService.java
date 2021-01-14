@@ -30,7 +30,7 @@ public class ServicoService {
     }
 
     public Servico save (ServicoPostRequestBody servicoPostRequestBody){
-        return servicoRepository.save(ServicoMapper.INSTANCE.toServico(servicoPostRequestBody));
+        return servicoRepository.save(ServicoMapper.toServico(servicoPostRequestBody));
     }
 
     public void delete (Long id){
@@ -38,7 +38,7 @@ public class ServicoService {
     }
 
     public Servico replace (ServicoPutRequestBody servicoPutRequestBody){
-        return servicoRepository.save(ServicoMapper.INSTANCE.toServico1(servicoPutRequestBody));
+        return servicoRepository.save(ServicoMapper.toServico(servicoPutRequestBody));
     }
 
 }
