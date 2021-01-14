@@ -5,6 +5,8 @@ import com.samuel.barbearia.requests.ServicoPostRequestBody;
 import com.samuel.barbearia.requests.ServicoPutRequestBody;
 import com.samuel.barbearia.service.ServicoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,11 @@ public class ServicoController {
     @GetMapping
     private ResponseEntity<List<Servico>> findAll (){
         return new ResponseEntity<>(servicoService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/list")
+    private ResponseEntity<Page<Servico>> findAll (Pageable pageble){
+        return new ResponseEntity<>(servicoService.findAll(pageble), HttpStatus.OK);
     }
 
     @GetMapping(path = "/find")

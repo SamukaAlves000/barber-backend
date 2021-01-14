@@ -7,6 +7,8 @@ import com.samuel.barbearia.repository.ServicoRepository;
 import com.samuel.barbearia.requests.ServicoPostRequestBody;
 import com.samuel.barbearia.requests.ServicoPutRequestBody;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +21,10 @@ public class ServicoService {
 
     public List<Servico> findAll (){
         return servicoRepository.findAll();
+    }
+
+    public Page<Servico> findAll (Pageable pageable){
+        return servicoRepository.findAll(pageable);
     }
 
     public List<Servico> findAllByDescricao (String descricao){
