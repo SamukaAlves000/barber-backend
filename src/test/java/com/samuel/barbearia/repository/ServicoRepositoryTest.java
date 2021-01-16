@@ -1,6 +1,7 @@
 package com.samuel.barbearia.repository;
 
 import com.samuel.barbearia.domain.Servico;
+import com.samuel.barbearia.util.ServicoCreator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,12 +18,11 @@ class ServicoRepositoryTest {
     @Autowired
     private ServicoRepository servicoRepository;
 
-
     @Test
     @DisplayName("Save persiste Servico when successful")
     void save_PersisteServico_WhenSuccessFul(){
 
-        Servico servico = this.createServico();
+        Servico servico = ServicoCreator.createServicoSaved();
         Servico servicoSave =  this.servicoRepository.save(servico);
 
         Assertions.assertThat(servicoSave).isNotNull();
@@ -42,7 +42,7 @@ class ServicoRepositoryTest {
     @DisplayName("Save updates Servico when successful")
     void save_UpdatesServico_WhenSuccessFul(){
 
-        Servico servicoSave =  this.servicoRepository.save(this.createServico());
+        Servico servicoSave =  this.servicoRepository.save(ServicoCreator.createServicoSaved());
 
         servicoSave.setDescricao("Corte simples 2");
         Servico servicoUpdate = this.servicoRepository.save(servicoSave);
@@ -64,7 +64,7 @@ class ServicoRepositoryTest {
     @DisplayName("Delete removes Servico when successful")
     void delete_RemovesServico_WhenSuccessFul(){
 
-        Servico servicoSave =  this.servicoRepository.save(this.createServico());
+        Servico servicoSave =  this.servicoRepository.save(ServicoCreator.createServicoSaved());
 
         this.servicoRepository.delete(servicoSave);
 
@@ -79,22 +79,14 @@ class ServicoRepositoryTest {
     @DisplayName("Find By name returns list of  Servico when successful")
     void findByName_ReturnListOfServico_WhenSuccessFul(){
 
-        Servico servicoSave =  this.servicoRepository.save(this.createServico());
+        Servico servicoSave =  this.servicoRepository.save(ServicoCreator.createServicoSaved());
 
         List<Servico> servicos = servicoRepository.findAllByDescricao(servicoSave.getDescricao());
 
         Assertions.assertThat(servicos).isNotEmpty();
+
         Assertions.assertThat(servicos).contains(servicoSave);
 
-    }
-
-    private Servico createServico(){
-
-        return  new Servico().builder()
-                .descricao("Corte Simples")
-                .duracao(30)
-                .valor(20)
-                .build();
     }
 
 }

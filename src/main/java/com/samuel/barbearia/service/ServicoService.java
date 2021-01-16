@@ -43,8 +43,8 @@ public class ServicoService {
          servicoRepository.delete(this.findById(id));
     }
 
-    public Servico replace (ServicoPutRequestBody servicoPutRequestBody){
-        return servicoRepository.save(ServicoMapper.toServico(servicoPutRequestBody));
+    public void replace (ServicoPutRequestBody servicoPutRequestBody){
+         servicoRepository.save(ServicoMapper.toServico(servicoPutRequestBody));
     }
 
 }

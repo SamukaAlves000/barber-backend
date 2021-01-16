@@ -22,37 +22,37 @@ public class ServicoController {
     private final ServicoService servicoService;
 
     @GetMapping
-    private ResponseEntity<List<Servico>> findAll (){
+    public ResponseEntity<List<Servico>> findAll (){
         return new ResponseEntity<>(servicoService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/list")
-    private ResponseEntity<Page<Servico>> findAll (Pageable pageble){
+    public ResponseEntity<Page<Servico>> findAll (Pageable pageble){
         return new ResponseEntity<>(servicoService.findAll(pageble), HttpStatus.OK);
     }
 
     @GetMapping(path = "/find")
-    private ResponseEntity<List<Servico>> findAllByDescricao (@RequestParam String descricao){
+    public ResponseEntity<List<Servico>> findAllByDescricao (@RequestParam String descricao){
         return new ResponseEntity<>(servicoService.findAllByDescricao(descricao), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}")
-    private ResponseEntity<Servico> findAl (@PathVariable  long id){
+    public ResponseEntity<Servico> findAl (@PathVariable  long id){
         return new ResponseEntity<>(servicoService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    private ResponseEntity<Servico> save (@RequestBody @Valid ServicoPostRequestBody servicoPostRequestBody){
+    public ResponseEntity<Servico> save (@RequestBody @Valid ServicoPostRequestBody servicoPostRequestBody){
         return new ResponseEntity<>(servicoService.save(servicoPostRequestBody), HttpStatus.CREATED);
     }
 
     @PutMapping
-    private ResponseEntity<Servico> update (@RequestBody ServicoPutRequestBody servicoPutRequestBody){
-        return new ResponseEntity<>(servicoService.replace(servicoPutRequestBody), HttpStatus.OK);
+    public ResponseEntity<Void> update (@RequestBody ServicoPutRequestBody servicoPutRequestBody){
+        return new ResponseEntity<>( HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(path = "/{id}")
-    private ResponseEntity<Void> delete (@PathVariable  long id){
+    public ResponseEntity<Void> delete (@PathVariable  long id){
         servicoService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
