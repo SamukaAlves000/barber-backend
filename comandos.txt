@@ -1,0 +1,2 @@
+mvn test -Pintegration-tests
+docker-compose up
