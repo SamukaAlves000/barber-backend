@@ -1,2 +1,7 @@
 mvn test -Pintegration-tests
 docker-compose up
+
+HEADER
+KEY             VALUE
+X-XSRF-TOKEN = COOKIES-TOKEN
+GET
