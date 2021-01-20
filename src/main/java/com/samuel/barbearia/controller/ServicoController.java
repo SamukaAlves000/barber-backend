@@ -27,47 +27,47 @@ public class ServicoController {
 
     private final ServicoService servicoService;
 
-    @GetMapping
-    public ResponseEntity<List<Servico>> findAll (){
-        return new ResponseEntity<>(servicoService.findAll(), HttpStatus.OK);
-    }
-
-    @GetMapping(path = "/list")
-    public ResponseEntity<Page<Servico>> findAll (@ParameterObject Pageable pageble){
-        return new ResponseEntity<>(servicoService.findAll(pageble), HttpStatus.OK);
-    }
-
-    @GetMapping(path = "/find")
-    public ResponseEntity<List<Servico>> findAllByDescricao (@RequestParam String descricao){
-        return new ResponseEntity<>(servicoService.findAllByDescricao(descricao), HttpStatus.OK);
-    }
-
-    @GetMapping(path = "/{id}")
-    public ResponseEntity<Servico> findAl (@PathVariable  long id){
-        return new ResponseEntity<>(servicoService.findById(id), HttpStatus.OK);
-    }
-
-    @PostMapping(path = "/admin")
-   // @PreAuthorize("hasAnyRole('ADMIN')")
+    @PostMapping(path = "/admin/post")
     public ResponseEntity<Servico> save (@RequestBody @Valid ServicoPostRequestBody servicoPostRequestBody){
         return new ResponseEntity<>(servicoService.save(servicoPostRequestBody), HttpStatus.CREATED);
     }
 
-    @PutMapping
+    @PutMapping(path = "/admin/put")
     public ResponseEntity<Void> update (@RequestBody ServicoPutRequestBody servicoPutRequestBody){
-        return new ResponseEntity<>( HttpStatus.NO_CONTENT);
+        servicoService.replace(servicoPutRequestBody);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/admin/delete/{id}")
     public ResponseEntity<Void> delete (@PathVariable  long id){
         servicoService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping(path = "auth/{id}")
-    public ResponseEntity<Servico> findByIdAuthPrincipal (@PathVariable  long id, @AuthenticationPrincipal UserDetails userDetails){
-        log.info(userDetails);
+    @GetMapping(path = "/admin/get")
+    public ResponseEntity<List<Servico>> findAll (){
+        return new ResponseEntity<>(servicoService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/admin/get/page")
+    public ResponseEntity<Page<Servico>> findAll (@ParameterObject Pageable pageble){
+        return new ResponseEntity<>(servicoService.findAll(pageble), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/admin/get/find")
+    public ResponseEntity<List<Servico>> findAllByDescricao (@RequestParam String descricao){
+        return new ResponseEntity<>(servicoService.findAllByDescricao(descricao), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/admin/get/{id}")
+    public ResponseEntity<Servico> findById (@PathVariable  long id){
         return new ResponseEntity<>(servicoService.findById(id), HttpStatus.OK);
     }
+
+//    @GetMapping(path = "/admin/get/auth/{id}")
+//    public ResponseEntity<Servico> findByIdAuthPrincipal (@PathVariable  long id, @AuthenticationPrincipal UserDetails userDetails){
+//        log.info(userDetails);
+//        return new ResponseEntity<>(servicoService.findById(id), HttpStatus.OK);
+//    }
 
 }

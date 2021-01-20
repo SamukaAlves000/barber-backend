@@ -1,13 +1,9 @@
 package com.samuel.barbearia.integration;
 
 import com.samuel.barbearia.domain.Servico;
-import com.samuel.barbearia.mapper.ServicoPostRequestBodyMapper;
-import com.samuel.barbearia.mapper.ServicoPutRequestBodyMapper;
 import com.samuel.barbearia.repository.ServicoRepository;
-import com.samuel.barbearia.requests.ServicoPostRequestBody;
 import com.samuel.barbearia.util.ServicoCreator;
 import com.samuel.barbearia.wrapper.PageableResponse;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +11,6 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -23,14 +18,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -50,7 +41,7 @@ class ServicoControllerIT {
         @Bean(name = "testRestTemplateRoleUser")
         public TestRestTemplate testRestTemplateRoleUserCreator(){
             RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder()
-                    .basicAuthentication("samuel","samuel");
+                    .basicAuthentication("rafael","samuel");
             return new TestRestTemplate(restTemplateBuilder);
         }
 
@@ -74,7 +65,7 @@ class ServicoControllerIT {
         Servico servico = servicoRepositoryMock.save(ServicoCreator.createServicoSaved());
 
         String expectDescricao = servico.getDescricao();
-        PageableResponse<Servico> servicoPage = testRestTemplate.exchange("http://localhost:8080/servicos/list",HttpMethod.GET,null,
+        PageableResponse<Servico> servicoPage = testRestTemplate.exchange("http://localhost:8080/servicos/admin/get/page",HttpMethod.GET,null,
 
         new ParameterizedTypeReference<PageableResponse<Servico>>(){}).getBody();
         

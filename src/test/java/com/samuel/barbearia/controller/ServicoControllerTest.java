@@ -95,7 +95,7 @@ class ServicoControllerTest {
     void findById_Returns_Servico_When_Successful(){
 
         String expectDescricao = ServicoCreator.createServicoValid().getDescricao();
-        Servico servico = servicoController.findAl(1L).getBody();
+        Servico servico = servicoController.findById(1L).getBody();
 
         Assertions.assertThat(servico).isNotNull();
 
