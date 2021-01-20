@@ -6,6 +6,7 @@ import com.samuel.barbearia.requests.ServicoPutRequestBody;
 import com.samuel.barbearia.service.ServicoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ public class ServicoController {
     }
 
     @GetMapping(path = "/list")
-    public ResponseEntity<Page<Servico>> findAll (Pageable pageble){
+    public ResponseEntity<Page<Servico>> findAll (@ParameterObject Pageable pageble){
         return new ResponseEntity<>(servicoService.findAll(pageble), HttpStatus.OK);
     }
 
@@ -46,8 +47,8 @@ public class ServicoController {
         return new ResponseEntity<>(servicoService.findById(id), HttpStatus.OK);
     }
 
-    @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PostMapping(path = "/admin")
+   // @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Servico> save (@RequestBody @Valid ServicoPostRequestBody servicoPostRequestBody){
         return new ResponseEntity<>(servicoService.save(servicoPostRequestBody), HttpStatus.CREATED);
     }
