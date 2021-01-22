@@ -23,6 +23,7 @@ import java.util.List;
 @RequestMapping("servicos")
 @RequiredArgsConstructor
 @Log4j2
+@CrossOrigin(origins = "*")
 public class ServicoController {
 
     private final ServicoService servicoService;
