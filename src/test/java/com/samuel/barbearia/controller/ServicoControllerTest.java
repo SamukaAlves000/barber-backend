@@ -1,30 +1,11 @@
 package com.samuel.barbearia.controller;
 
-import com.samuel.barbearia.domain.Servico;
-import com.samuel.barbearia.mapper.ServicoPostRequestBodyMapper;
-import com.samuel.barbearia.mapper.ServicoPutRequestBodyMapper;
-import com.samuel.barbearia.requests.ServicoPostRequestBody;
-import com.samuel.barbearia.requests.ServicoPutRequestBody;
 import com.samuel.barbearia.service.ServicoService;
-import com.samuel.barbearia.util.ServicoCreator;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
-import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 class ServicoControllerTest {
 
