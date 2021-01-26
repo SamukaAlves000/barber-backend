@@ -47,35 +47,35 @@ class ServicoControllerIT {
 
     }
 
-    @BeforeEach
-    public void setUp() {
-        PageImpl<Servico> servicoPage = new PageImpl<>(List.of(ServicoCreator.createServicoValid()));
-        BDDMockito.when(servicoRepositoryMock.findAll(ArgumentMatchers.any(PageRequest.class)))
-                .thenReturn(servicoPage);
-
-        BDDMockito.when(servicoRepositoryMock.save(ArgumentMatchers.any(Servico.class)))
-                .thenReturn(ServicoCreator.createServicoValid());
-
-    }
-
-    @Test
-    @DisplayName("List returns list of servicos page object when sucess")
-    void list_Returns_ListOfServicosInsidePageObject_When_Successful(){
-
-        Servico servico = servicoRepositoryMock.save(ServicoCreator.createServicoSaved());
-
-        String expectDescricao = servico.getDescricao();
-        PageableResponse<Servico> servicoPage = testRestTemplate.exchange("http://localhost:8080/servicos/admin/get/page",HttpMethod.GET,null,
-
-        new ParameterizedTypeReference<PageableResponse<Servico>>(){}).getBody();
-        
-//        Assertions.assertThat(servicoPage).isNotNull();
+//    @BeforeEach
+//    public void setUp() {
+//        PageImpl<Servico> servicoPage = new PageImpl<>(List.of(ServicoCreator.createServicoValid()));
+//        BDDMockito.when(servicoRepositoryMock.findAll(ArgumentMatchers.any(PageRequest.class)))
+//                .thenReturn(servicoPage);
 //
-//        Assertions.assertThat(servicoPage.toList()).isNotEmpty()
-//        .hasSize(1);
+//        BDDMockito.when(servicoRepositoryMock.save(ArgumentMatchers.any(Servico.class)))
+//                .thenReturn(ServicoCreator.createServicoValid());
 //
-//        Assertions.assertThat(servicoPage.toList().get(0).getDescricao()).isEqualTo(expectDescricao);
-    }
+//    }
+//
+//    @Test
+//    @DisplayName("List returns list of servicos page object when sucess")
+//    void list_Returns_ListOfServicosInsidePageObject_When_Successful(){
+//
+//        Servico servico = servicoRepositoryMock.save(ServicoCreator.createServicoSaved());
+//
+//        String expectDescricao = servico.getDescricao();
+//        PageableResponse<Servico> servicoPage = testRestTemplate.exchange("http://localhost:8080/servicos/admin/get/page",HttpMethod.GET,null,
+//
+//        new ParameterizedTypeReference<PageableResponse<Servico>>(){}).getBody();
+//
+////        Assertions.assertThat(servicoPage).isNotNull();
+////
+////        Assertions.assertThat(servicoPage.toList()).isNotEmpty()
+////        .hasSize(1);
+////
+////        Assertions.assertThat(servicoPage.toList().get(0).getDescricao()).isEqualTo(expectDescricao);
+//    }
 
 
 //    @Test
