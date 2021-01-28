@@ -16,7 +16,6 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<maven.compiler.release>11</maven.compiler.release>
 		<org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<springdoc-openapi-security.version>1.5.2</springdoc-openapi-security.version>
@@ -139,8 +138,10 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
-					<source>11</source> <!-- depending on your project -->
-					<target>11</target> <!-- depending on your project -->
+					<source>1.8</source> <!-- depending on your project -->
+					<target>1.8</target> <!-- depending on your project -->
+<!--					<source>11</source> &lt;!&ndash; depending on your project &ndash;&gt;-->
+<!--					<target>11</target> &lt;!&ndash; depending on your project &ndash;&gt;-->
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.mapstruct</groupId>
