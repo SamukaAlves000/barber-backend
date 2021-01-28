@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>11</java.version>
+		<maven.compiler.release>11</maven.compiler.release>
 		<org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<springdoc-openapi-security.version>1.5.2</springdoc-openapi-security.version>
