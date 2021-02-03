@@ -54,7 +54,7 @@ public class PessoaService {
 
        Pessoa pessoaSaved = pessoaRepository.save(pessoa);
 
-        if(pessoaSaved.getId() != null) {
+        if(p.getFuncionario() != null) {
             Funcionario funcionario = new Funcionario()
                     .builder()
                     .salario(p.getFuncionario().getSalario())

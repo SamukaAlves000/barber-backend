@@ -22,7 +22,7 @@ public class Pessoa {
     private String fone;
     private String cidade;
     private String uf;
-    private char sexo;
+    private String sexo;
     private LocalDate dataNasc;
     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn

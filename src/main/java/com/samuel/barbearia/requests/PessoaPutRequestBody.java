@@ -15,7 +15,7 @@ public class PessoaPutRequestBody implements Serializable {
     private String fone;
     private String cidade;
     private String uf;
-    private char sexo;
+    private String sexo;
     private LocalDate dataNasc;
     private Funcionario funcionario;
 }
