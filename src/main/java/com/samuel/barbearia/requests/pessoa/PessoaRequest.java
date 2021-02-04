@@ -7,5 +7,5 @@ import java.util.List;
 
 @Data
 public class PessoaRequest extends Pessoa {
-    private List<Agendamento> agendamentos;
+
 }

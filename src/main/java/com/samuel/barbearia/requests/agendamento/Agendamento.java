@@ -1,6 +1,7 @@
 package com.samuel.barbearia.requests.agendamento;
 
 import com.samuel.barbearia.requests.funcionario.Funcionario;
+import com.samuel.barbearia.requests.pessoa.Pessoa;
 import com.samuel.barbearia.requests.servico.Servico;
 import lombok.Data;
 
@@ -17,4 +18,5 @@ public class Agendamento {
     private int avaliacao;
     private Funcionario funcionario;
     private Servico servico;
+    private Pessoa pessoa;
 }
