@@ -3,6 +3,7 @@ package com.samuel.barbearia.controller;
 import com.samuel.barbearia.domain.Pessoa;
 import com.samuel.barbearia.requests.PessoaPostRequestBody;
 import com.samuel.barbearia.requests.PessoaPutRequestBody;
+import com.samuel.barbearia.requests.pessoa.PessoaRequest;
 import com.samuel.barbearia.service.PessoaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -13,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -43,8 +43,8 @@ public class PessoaController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping(path = "/admin/get")
-    public ResponseEntity<List<PessoaPutRequestBody>> findAll (){
+    @GetMapping(path = "/admin")
+    public ResponseEntity<List<PessoaRequest>> findAll (){
         return new ResponseEntity<>(pessoaService.findAll(), HttpStatus.OK);
     }
 

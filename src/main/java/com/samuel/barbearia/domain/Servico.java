@@ -1,14 +1,11 @@
 package com.samuel.barbearia.domain;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -21,4 +18,12 @@ public class Servico {
     private String descricao;
     private double valor;
     private int duracao;
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "servico_funcionario",
+            joinColumns = @JoinColumn(name = "servico_id"),
+            inverseJoinColumns = @JoinColumn(name = "funcionario_id"))
+    private List<Funcionario> funcionarios;
+    @OneToMany(mappedBy="servico")
+    private List<Agendamento> agendamentos;
 }

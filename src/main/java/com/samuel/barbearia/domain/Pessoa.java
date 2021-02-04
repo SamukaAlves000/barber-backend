@@ -6,13 +6,13 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @Entity
 @SuperBuilder
 public class Pessoa {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,4 +27,6 @@ public class Pessoa {
     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Funcionario funcionario;
+    @OneToMany(mappedBy="pessoa")
+    private List<Agendamento> agendamentos;
 }

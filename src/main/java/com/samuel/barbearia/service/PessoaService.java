@@ -3,11 +3,12 @@ package com.samuel.barbearia.service;
 import com.samuel.barbearia.domain.Funcionario;
 import com.samuel.barbearia.domain.Pessoa;
 import com.samuel.barbearia.exception.BadRequestException;
-import com.samuel.barbearia.mapper.PessoaMapper;
+import com.samuel.barbearia.mapper.pessoa.PessoaMapper;
 import com.samuel.barbearia.repository.FuncionarioRepository;
 import com.samuel.barbearia.repository.PessoaRepository;
 import com.samuel.barbearia.requests.PessoaPostRequestBody;
 import com.samuel.barbearia.requests.PessoaPutRequestBody;
+import com.samuel.barbearia.requests.pessoa.PessoaRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,10 +24,10 @@ public class PessoaService {
     private final PessoaRepository pessoaRepository;
     private final FuncionarioRepository funcionarioRepository;
 
-    public List<PessoaPutRequestBody> findAll (){
-        List<PessoaPutRequestBody> list = pessoaRepository.findAll()
+    public List<PessoaRequest> findAll (){
+        List<PessoaRequest> list = pessoaRepository.findAll()
                 .stream()
-                .map(pessoa -> PessoaMapper.toPessoaPutRequestBody(pessoa))
+                .map(pessoa -> PessoaMapper.toPessoaRequest(pessoa))
                 .collect(Collectors.toList());
         return list;
     }
