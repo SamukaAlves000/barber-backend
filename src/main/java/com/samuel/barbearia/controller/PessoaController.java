@@ -25,19 +25,19 @@ public class PessoaController {
 
     private final PessoaService pessoaService;
 
-    @PostMapping(path = "/admin/post")
-    public ResponseEntity<Pessoa> save (@RequestBody PessoaPostRequestBody PessoaPostRequestBody){
+    @PostMapping(path = "/admin")
+    public ResponseEntity<PessoaRequest> save (@RequestBody PessoaRequest pessoaRequest){
         return new ResponseEntity<>(
-                pessoaService.save(PessoaPostRequestBody), HttpStatus.CREATED);
+                pessoaService.save(pessoaRequest), HttpStatus.CREATED);
     }
 
-    @PutMapping(path = "/admin/put")
-    public ResponseEntity<Void> update (@RequestBody PessoaPutRequestBody PessoaPutRequestBody){
-        pessoaService.replace(PessoaPutRequestBody);
+    @PutMapping(path = "/admin")
+    public ResponseEntity<Void> update (@RequestBody PessoaRequest pessoaRequest){
+        pessoaService.replace(pessoaRequest);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping(path = "/admin/delete/{id}")
+    @DeleteMapping(path = "/admin/{id}")
     public ResponseEntity<Void> delete (@PathVariable  long id){
         pessoaService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -48,19 +48,20 @@ public class PessoaController {
         return new ResponseEntity<>(pessoaService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/admin/get/page")
+    @GetMapping(path = "/admin/{id}")
+    public ResponseEntity<PessoaRequest> findById (@PathVariable  long id){
+        return new ResponseEntity<>(pessoaService.findById(id), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/admin/page")
     public ResponseEntity<Page<Pessoa>> findAll (@ParameterObject Pageable pageble){
         return new ResponseEntity<>(pessoaService.findAll(pageble), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/admin/get/find")
+    @GetMapping(path = "/admin/find")
     public ResponseEntity<List<Pessoa>> findAllByDescricao (@RequestParam String email){
         return new ResponseEntity<>(pessoaService.findAllByEmail(email), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/admin/get/{id}")
-    public ResponseEntity<Pessoa> findById (@PathVariable  long id){
-        return new ResponseEntity<>(pessoaService.findById(id), HttpStatus.OK);
-    }
 
 }

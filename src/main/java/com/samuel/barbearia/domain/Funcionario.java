@@ -16,11 +16,11 @@ public class Funcionario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private double salario;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;
-    @ManyToMany(mappedBy = "funcionarios")
+    @ManyToMany(mappedBy = "funcionarios", cascade = CascadeType.ALL)
     private List<Servico> servicos;
     @OneToMany(mappedBy="funcionario")
     private List<Agendamento> agendamentos;

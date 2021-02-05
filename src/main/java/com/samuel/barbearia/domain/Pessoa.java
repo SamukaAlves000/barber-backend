@@ -1,5 +1,8 @@
 package com.samuel.barbearia.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -24,9 +27,9 @@ public class Pessoa {
     private String uf;
     private String sexo;
     private LocalDate dataNasc;
+    @JsonBackReference
     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private Funcionario funcionario;
+    Funcionario funcionario;
     @OneToMany(mappedBy="pessoa")
     private List<Agendamento> agendamentos;
 }

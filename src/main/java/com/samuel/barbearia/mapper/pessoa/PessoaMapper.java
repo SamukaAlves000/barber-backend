@@ -21,6 +21,10 @@ public class PessoaMapper {
         return  modelMapper.map(pessoaPutRequestBody, Pessoa.class);
     }
 
+    public static Pessoa toPessoa(PessoaRequest pessoaRequest){
+        return  modelMapper.map(pessoaRequest, Pessoa.class);
+    }
+
     public static PessoaPutRequestBody toPessoaPutRequestBody(Pessoa pessoa){
         return  modelMapper.map(pessoa, PessoaPutRequestBody.class);
     }

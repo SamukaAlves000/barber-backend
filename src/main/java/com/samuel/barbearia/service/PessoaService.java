@@ -36,45 +36,21 @@ public class PessoaService {
         return pessoaRepository.findAll(pageable);
     }
 
-    public Pessoa findById (Long id){
-        return pessoaRepository.findById(id).orElseThrow(() -> new BadRequestException("Anime not found"));
+    public PessoaRequest findById (Long id){
+        return PessoaMapper.toPessoaRequest(pessoaRepository.findById(id).orElseThrow(() -> new BadRequestException("Pessoa not found")));
     }
 
-    public Pessoa save (PessoaPostRequestBody p){
-
-        Pessoa pessoa = new Pessoa().builder()
-                .cidade(p.getCidade())
-                .cpf(p.getCpf())
-                .dataNasc(p.getDataNasc())
-                .email(p.getEmail())
-                .fone(p.getFone())
-                .sexo(p.getSexo())
-                .uf(p.getUf())
-                .nome(p.getNome())
-                .build();
-
-       Pessoa pessoaSaved = pessoaRepository.save(pessoa);
-
-        if(p.getFuncionario() != null) {
-            Funcionario funcionario = new Funcionario()
-                    .builder()
-                    .salario(p.getFuncionario().getSalario())
-                    .pessoa(pessoaSaved)
-                    .build();
-            pessoaSaved.setFuncionario(funcionario);
-            funcionarioRepository.save(funcionario);
-
-        }
-
-        return pessoaSaved;
+    public PessoaRequest save (PessoaRequest pessoaRequest){
+        Pessoa pessoa = pessoaRepository.save(PessoaMapper.toPessoa(pessoaRequest));
+        return PessoaMapper.toPessoaRequest(pessoa);
     }
 
     public void delete (Long id){
-        pessoaRepository.delete(this.findById(id));
+        pessoaRepository.delete(PessoaMapper.toPessoa(this.findById(id)));
     }
 
-    public void replace (PessoaPutRequestBody pessoaPutRequestBody){
-        pessoaRepository.save(PessoaMapper.toPessoa(pessoaPutRequestBody));
+    public void replace (PessoaRequest pessoaRequest){
+        pessoaRepository.save(PessoaMapper.toPessoa(pessoaRequest));
     }
 
     public List<Pessoa> findAllByEmail(String email) {

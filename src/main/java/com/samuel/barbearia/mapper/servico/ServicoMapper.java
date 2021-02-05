@@ -25,4 +25,8 @@ public class ServicoMapper {
     public static Servico toServico(ServicoPutRequestBody servicoPutRequestBody){
         return modelMapper.map(servicoPutRequestBody, Servico.class);
     }
+
+    public static Servico toServico(com.samuel.barbearia.requests.servico.Servico servico){
+        return modelMapper.map(servico,Servico.class);
+    }
 }
