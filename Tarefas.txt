@@ -1,0 +1,16 @@
+Backend
+
+1 - Adiconar chave composta tabela serviço funcionario para não permitir cadastrar mais de um servico para um funcionário.
+
+
+
+
+
+
+
+
+
+
+
+
+Frontend
