@@ -16,11 +16,11 @@ public class ServicoFuncionario {
 
     @ManyToOne
     @MapsId("servicoId")
-    @JoinColumn(name = "servico_id")
+    @JoinColumn
     private Servico servico;
 
     @ManyToOne
     @MapsId("funcionarioId")
-    @JoinColumn(name = "funcionario_id")
+    @JoinColumn
     private Funcionario funcionario;
 }

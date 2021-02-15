@@ -13,10 +13,10 @@ import java.io.Serializable;
 @SuperBuilder
 public class ServicoFuncionarioKey implements Serializable {
 
-    @Column(name = "servico_id")
+    @Column
     private Long servicoId;
 
-    @Column(name = "funcionario_id")
+    @Column
     private Long funcionarioId;
 
 

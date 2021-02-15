@@ -1,7 +1,5 @@
 package com.samuel.barbearia.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -20,7 +18,7 @@ public class Funcionario {
     private double salario;
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId
-    @JoinColumn(name = "pessoa_id")
+    @JoinColumn
     private Pessoa pessoa;
     @OneToMany(mappedBy = "funcionario", cascade = CascadeType.REMOVE)
     List<ServicoFuncionario> servicos;

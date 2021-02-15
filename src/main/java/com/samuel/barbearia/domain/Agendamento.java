@@ -21,13 +21,13 @@ public class Agendamento{
     private String status;
     private int avaliacao;
     @ManyToOne
-    @JoinColumn(name="funcionario_id", nullable=false)
+    @JoinColumn
     private Funcionario funcionario;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="pessoa_id", nullable=false)
+    @JoinColumn
     private Pessoa pessoa;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="servico_id", nullable=false)
+    @JoinColumn
     private Servico servico;
 
 }

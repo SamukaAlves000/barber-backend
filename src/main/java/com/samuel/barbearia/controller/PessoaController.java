@@ -1,8 +1,6 @@
 package com.samuel.barbearia.controller;
 
 import com.samuel.barbearia.domain.Pessoa;
-import com.samuel.barbearia.requests.PessoaPostRequestBody;
-import com.samuel.barbearia.requests.PessoaPutRequestBody;
 import com.samuel.barbearia.requests.pessoa.PessoaRequest;
 import com.samuel.barbearia.service.PessoaService;
 import lombok.RequiredArgsConstructor;
