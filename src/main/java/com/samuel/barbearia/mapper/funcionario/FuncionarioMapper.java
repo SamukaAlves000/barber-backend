@@ -13,8 +13,13 @@ public class FuncionarioMapper {
         return modelMapper.map(funcionario, FuncionarioRequest.class);
     }
 
+
     public static Funcionario toFuncionario(FuncionarioRequest funcionarioRequest) {
         return modelMapper.map(funcionarioRequest,Funcionario.class);
+    }
+
+    public static Funcionario toFuncionario(com.samuel.barbearia.requests.funcionario.Funcionario funcionario) {
+        return modelMapper.map(funcionario,Funcionario.class);
     }
 
     public static Pessoa toPessoa(com.samuel.barbearia.requests.pessoa.Pessoa pessoa) {

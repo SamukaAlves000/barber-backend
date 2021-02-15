@@ -1,11 +1,9 @@
 package com.samuel.barbearia.service;
 
 import com.samuel.barbearia.mapper.agendamento.AgendamentoMapper;
-import com.samuel.barbearia.mapper.funcionario.FuncionarioMapper;
 import com.samuel.barbearia.repository.AgendamentoRepository;
 import com.samuel.barbearia.domain.Agendamento;
 import com.samuel.barbearia.requests.agendamento.AgendamentoRequest;
-import com.samuel.barbearia.requests.funcionario.FuncionarioRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

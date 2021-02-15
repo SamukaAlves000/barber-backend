@@ -1,12 +1,12 @@
 package com.samuel.barbearia.service;
 
-import com.samuel.barbearia.domain.Funcionario;
-import com.samuel.barbearia.domain.Pessoa;
+import com.samuel.barbearia.domain.*;
 import com.samuel.barbearia.exception.BadRequestException;
 import com.samuel.barbearia.mapper.funcionario.FuncionarioMapper;
+import com.samuel.barbearia.mapper.pessoa.PessoaMapper;
 import com.samuel.barbearia.mapper.servico.ServicoMapper;
 import com.samuel.barbearia.repository.FuncionarioRepository;
-import com.samuel.barbearia.repository.PessoaRepository;
+import com.samuel.barbearia.repository.ServicoFuncionarioRepository;
 import com.samuel.barbearia.requests.funcionario.FuncionarioRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class FuncionarioService {
 
     private final FuncionarioRepository funcionarioRepository;
-    private final PessoaRepository pessoaRepository;
+    private final ServicoFuncionarioRepository servicoFuncionarioRepository;
 
     public List<FuncionarioRequest> findAll (){
         List<FuncionarioRequest> funcionarioRequestList = funcionarioRepository.findAll()
@@ -39,17 +39,55 @@ public class FuncionarioService {
     }
 
     public FuncionarioRequest save (FuncionarioRequest funcionarioRequest){
-        Funcionario funcionario = FuncionarioMapper.toFuncionario(funcionarioRequest);
-        funcionario.getPessoa().setFuncionario(null);
-        FuncionarioRequest funcionarioRequestSaved =    FuncionarioMapper.toFuncionarioRequest(funcionarioRepository.save(funcionario));
-        return funcionarioRequestSaved;
+
+        Pessoa pessoa = PessoaMapper.toPessoa(funcionarioRequest.getPessoa());
+        Funcionario funcionario = new Funcionario()
+                .builder()
+                .pessoa(pessoa)
+                .salario(funcionarioRequest.getSalario())
+                .build();
+
+        //UPDATE
+        if(funcionarioRequest.getId() != null) {
+            funcionario.setId(funcionarioRequest.getId());
+            List<ServicoFuncionario> servicoFuncionarioListRemove = servicoFuncionarioRepository.findAll().stream().filter(
+                    servicoFuncionario -> servicoFuncionario.getFuncionario().getId() == funcionarioRequest.getId()).collect(Collectors.toList());
+            servicoFuncionarioRepository.deleteAll(servicoFuncionarioListRemove);
+        }
+
+        Funcionario funcionarioSaved = this.funcionarioRepository.save(funcionario);
+
+        if (funcionarioRequest.getServicos() != null ){
+
+            funcionarioRequest.getServicos().forEach(servicoFuncionario -> {
+
+                Servico servico = ServicoMapper.toServico(servicoFuncionario.getServico());
+
+                ServicoFuncionarioKey servicoFuncionarioKey = new ServicoFuncionarioKey()
+                        .builder()
+                        .servicoId(servico.getId())
+                        .funcionarioId(funcionarioSaved.getId())
+                        .build();
+
+                ServicoFuncionario servicoFuncionarioNovo = new ServicoFuncionario()
+                        .builder()
+                        .servico(servico)
+                        .funcionario(funcionarioSaved)
+                        .id(servicoFuncionarioKey)
+                        .build();
+
+                servicoFuncionarioRepository.save(servicoFuncionarioNovo);
+
+            });
+        }
+
+        funcionarioRequest.setId(funcionarioSaved.getId());
+        funcionarioRequest.getPessoa().setId(funcionarioSaved.getId());
+
+        return  funcionarioRequest;
     }
 
     public void delete (Long id){
-        funcionarioRepository.delete(FuncionarioMapper.toFuncionario(this.findById(id)));
-    }
-
-    public void replace (FuncionarioRequest funcionarioRequest){
-        funcionarioRepository.save(FuncionarioMapper.toFuncionario(funcionarioRequest));
+        funcionarioRepository.delete(funcionarioRepository.findById(id).orElseThrow(() -> new BadRequestException("Funcionario not found")));
     }
 }

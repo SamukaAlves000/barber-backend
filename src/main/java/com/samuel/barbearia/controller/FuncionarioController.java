@@ -1,7 +1,6 @@
 package com.samuel.barbearia.controller;
 
 import com.samuel.barbearia.requests.funcionario.FuncionarioRequest;
-import com.samuel.barbearia.requests.pessoa.PessoaRequest;
 import com.samuel.barbearia.service.FuncionarioService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -28,7 +27,7 @@ public class FuncionarioController {
 
     @PutMapping(path = "/admin")
     public ResponseEntity<Void> update (@RequestBody FuncionarioRequest  funcionarioRequest){
-        funcionarioService.replace(funcionarioRequest);
+        funcionarioService.save(funcionarioRequest);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

@@ -1,5 +1,8 @@
 package com.samuel.barbearia.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -11,6 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @SuperBuilder
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Servico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,12 +24,8 @@ public class Servico {
     private String descricao;
     private double valor;
     private int duracao;
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(
-            name = "servico_funcionario",
-            joinColumns = @JoinColumn(name = "servico_id"),
-            inverseJoinColumns = @JoinColumn(name = "funcionario_id"))
-    private List<Funcionario> funcionarios;
+    @OneToMany(mappedBy = "servico", cascade = CascadeType.ALL)
+    List<ServicoFuncionario> funcionarios;
     @OneToMany(mappedBy="servico")
     private List<Agendamento> agendamentos;
 }

@@ -1,13 +1,16 @@
 package com.samuel.barbearia.requests.servico;
 
-import com.samuel.barbearia.requests.funcionario.Funcionario;
+import com.samuel.barbearia.requests.servico.ServicoFuncionario;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class ServicoRequest extends Servico{
-    private List<Funcionario> funcionarios;
+public class ServicoRequest {
+
+    private Long id;
+    private String descricao;
+    private double valor;
+    private int duracao;
+    private List<ServicoFuncionario> funcionarios;
 }

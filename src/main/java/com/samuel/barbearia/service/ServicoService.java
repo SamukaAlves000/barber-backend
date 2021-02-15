@@ -1,13 +1,16 @@
 package com.samuel.barbearia.service;
 
+import com.samuel.barbearia.domain.Funcionario;
 import com.samuel.barbearia.domain.Servico;
+import com.samuel.barbearia.domain.ServicoFuncionario;
+import com.samuel.barbearia.domain.ServicoFuncionarioKey;
 import com.samuel.barbearia.exception.BadRequestException;
+import com.samuel.barbearia.mapper.funcionario.FuncionarioMapper;
 import com.samuel.barbearia.mapper.servico.ServicoMapper;
+import com.samuel.barbearia.repository.ServicoFuncionarioRepository;
 import com.samuel.barbearia.repository.ServicoRepository;
 import com.samuel.barbearia.requests.servico.ServicoRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,10 +21,7 @@ import java.util.stream.Collectors;
 public class ServicoService {
 
     private final ServicoRepository servicoRepository;
-
-    public List<Servico> findAll (){
-        return servicoRepository.findAll();
-    }
+    private final ServicoFuncionarioRepository servicoFuncionarioRepository;
 
     public List<ServicoRequest> findAllServicoRequest (){
         List<ServicoRequest>  servicoRequestList = servicoRepository.findAll()
@@ -30,32 +30,59 @@ public class ServicoService {
         return servicoRequestList;
     }
 
-    public Page<Servico> findAll (Pageable pageable){
-        return servicoRepository.findAll(pageable);
-    }
-
-    public List<Servico> findAllByDescricao (String descricao){
-        return servicoRepository.findAllByDescricao(descricao);
-    }
-
-    public ServicoRequest findById (Long id){
+    public ServicoRequest findByIdServicoRequest (Long id){
         Servico servico = servicoRepository.findById(id).orElseThrow(() -> new BadRequestException("Servico not found"));
         ServicoRequest servicoRequest = ServicoMapper.toServicoRequest(servico);
         return  servicoRequest;
-    }
-
-    public ServicoRequest save (ServicoRequest servicoRequest){
-        Servico  servico = servicoRepository.save(ServicoMapper.toServico(servicoRequest));
-        ServicoRequest servicoSaved = ServicoMapper.toServicoRequest(servico);
-        return servicoSaved;
     }
 
     public void delete (Long id){
          servicoRepository.delete(servicoRepository.findById(id).orElseThrow(() -> new BadRequestException("Servico not found")));
     }
 
-    public void replace (ServicoRequest servicoRequest){
-        servicoRepository.save(ServicoMapper.toServico(servicoRequest));
+    public ServicoRequest save(ServicoRequest servicoRequest) {
+
+        Servico servico = new Servico()
+                .builder()
+                .descricao(servicoRequest.getDescricao())
+                .valor(servicoRequest.getValor())
+                .duracao(servicoRequest.getDuracao())
+                .build();
+//        UPDATE
+        if(servicoRequest.getId() != null){
+            servico.setId(servicoRequest.getId());
+            List<ServicoFuncionario> servicoFuncionarioListRemove = servicoFuncionarioRepository.findAll().stream().filter(
+                    servicoFuncionario -> servicoFuncionario.getServico().getId() == servicoRequest.getId()).collect(Collectors.toList());
+            servicoFuncionarioRepository.deleteAll(servicoFuncionarioListRemove);
+        }
+
+        Servico servicoSaved = servicoRepository.save(servico);
+
+        if(servicoRequest.getFuncionarios() != null ){
+            servicoRequest.getFuncionarios().forEach(servicoFuncionario -> {
+
+                Funcionario funcionario = FuncionarioMapper.toFuncionario(servicoFuncionario.getFuncionario());
+
+                ServicoFuncionarioKey servicoFuncionarioKey = new ServicoFuncionarioKey()
+                        .builder()
+                        .servicoId(servicoSaved.getId())
+                        .funcionarioId(funcionario.getId())
+                        .build();
+
+                ServicoFuncionario servicoFuncionarioNovo = new ServicoFuncionario()
+                        .builder()
+                        .servico(servicoSaved)
+                        .funcionario(funcionario)
+                        .id(servicoFuncionarioKey)
+                        .build();
+
+                servicoFuncionarioRepository.save(servicoFuncionarioNovo);
+            });
+        }
+
+        servicoRequest.setId(servicoSaved.getId());
+
+        return servicoRequest;
     }
 
 }
