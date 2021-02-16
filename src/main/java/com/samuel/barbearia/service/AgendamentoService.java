@@ -23,6 +23,13 @@ public class AgendamentoService {
         return agendamentoRequest;
     }
 
+    public List<AgendamentoRequest> findAllStatus (String status){
+        List<AgendamentoRequest> agendamentoRequest = agendamentoRepository.findAllByStatusOrderByDataAgendamento(status)
+                .stream().map(agendamento -> AgendamentoMapper.toAgendamentoRequest(agendamento))
+                .collect(Collectors.toList());
+        return agendamentoRequest;
+    }
+
     public AgendamentoRequest save(AgendamentoRequest agendamentoRequest) {
         Agendamento agendamento = AgendamentoMapper.toAgendamento(agendamentoRequest);
         return AgendamentoMapper.toAgendamentoRequest(agendamentoRepository.save(agendamento));

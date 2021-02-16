@@ -23,6 +23,10 @@ public class AgendamentoController {
     public ResponseEntity<List<AgendamentoRequest>> findAll (){
         return new ResponseEntity<>(agendamentoService.findAll(), HttpStatus.OK);
     }
+    @GetMapping(path = "/admin/status")
+    public ResponseEntity<List<AgendamentoRequest>> findAllStatus (@RequestParam String status){
+        return new ResponseEntity<>(agendamentoService.findAllStatus(status), HttpStatus.OK);
+    }
 
     @PostMapping(path = "/admin")
     public ResponseEntity<AgendamentoRequest> save (@RequestBody AgendamentoRequest agendamentoRequest){
