@@ -47,6 +47,10 @@ public class FuncionarioService {
                 .salario(funcionarioRequest.getSalario())
                 .build();
 
+        if(pessoa.getId() != null){
+            funcionario.setId(pessoa.getId());
+        }
+
         //UPDATE
         if(funcionarioRequest.getId() != null) {
             funcionario.setId(funcionarioRequest.getId());

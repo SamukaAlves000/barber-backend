@@ -9,6 +9,7 @@ import com.samuel.barbearia.mapper.funcionario.FuncionarioMapper;
 import com.samuel.barbearia.mapper.servico.ServicoMapper;
 import com.samuel.barbearia.repository.ServicoFuncionarioRepository;
 import com.samuel.barbearia.repository.ServicoRepository;
+import com.samuel.barbearia.repository.ServicoRepositoryImpl;
 import com.samuel.barbearia.requests.servico.ServicoRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class ServicoService {
 
     private final ServicoRepository servicoRepository;
     private final ServicoFuncionarioRepository servicoFuncionarioRepository;
+    public final ServicoRepositoryImpl teste;
 
     public List<ServicoRequest> findAllServicoRequest (){
         List<ServicoRequest>  servicoRequestList = servicoRepository.findAll()
